@@ -54,7 +54,6 @@ public class AllocationServiceImpl implements AllocationService {
         });
     }
 
-
     private void allocateBeerOrderLine(BeerOrderLineDto beerOrderLine) {
         List<BeerInventory> beerInventoryList = beerInventoryRepository.findAllByUpc(beerOrderLine.getUpc());
 
@@ -74,6 +73,9 @@ public class AllocationServiceImpl implements AllocationService {
                 beerOrderLine.setQuantityAllocated(allocatedQty + inventory);
                 beerInventory.setQuantityOnHand(0);
 
+            }
+
+            if (beerInventory.getQuantityOnHand() == 0) {
                 beerInventoryRepository.delete(beerInventory);
             }
         });
